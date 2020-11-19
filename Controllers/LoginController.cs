@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,14 +14,9 @@ namespace EndOfSemester3.Controllers
     {
         UsersController usersController = new UsersController();
         EncryptionController encryptionController = new EncryptionController();
-        // GET: api/Login
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
-        // GET: api/Login/5
-        public bool Get(string userName, string password)
+        // Login
+        public bool Login(string userName, string password)
         {
             bool isLoggedIn = false;
             var users = usersController.Get();
@@ -36,19 +34,31 @@ namespace EndOfSemester3.Controllers
             return isLoggedIn;
         }
 
-        // POST: api/Login
-        public void Post([FromBody]string value)
+        // Register
+        public void Register(string userName, string password, string name, string email, string address)
         {
+            string sql = "INSERT INTO Users (username, password, name, email, address, rating, numberOfSales, isAdmin, SALT)" +
+                " VALUES (@username, @password, @name, @email, @address, @rating, @numberOfSales, @isAdmin, @SALT)";
+
+            string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+            string salt = Guid.NewGuid().ToString("N").Substring(0, 20);
+            string hashedPassword = encryptionController.EncryptPassword(password + salt);
+            using (var connection = new SqlConnection(connStr))
+            {
+                var product = connection.Query(sql, new {
+                    username = userName, 
+                    password = hashedPassword,
+                    name = name, 
+                    email = email, 
+                    address = address,
+                    rating = 0,
+                    numberOfSales = 0, 
+                    isAdmin = 0,
+                    SALT = salt 
+                });
+                
+            }
         }
 
-        // PUT: api/Login/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Login/5
-        public void Delete(int id)
-        {
-        }
     }
 }
