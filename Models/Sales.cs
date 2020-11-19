@@ -14,6 +14,9 @@ namespace EndOfSemester3.Models
 		public string description { get; set; }
 		public int currentPrice { get; set; }
 
+		public Sales()
+        {
+        }
 		public Sales(int id_, int users_id_, int products_id_, bool isBid_, string description_, int currentPrice_)
 		{
 			this.id = id_;

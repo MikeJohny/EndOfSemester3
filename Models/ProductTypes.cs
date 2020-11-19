@@ -10,6 +10,9 @@ namespace EndOfSemester3.Models
 		public int id { get; set; }
 		public string type { get; set; }
 
+		public ProductTypes()
+        {
+        }
 		public ProductTypes(int id_, string type_)
 		{
 			this.id = id_;

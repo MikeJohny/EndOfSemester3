@@ -25,7 +25,6 @@ namespace EndOfSemester3.Controllers
                 var product = connection.Query<Products>(sql).ToList();
                 return product;
             }
-            //return new string[] { "value1", "value2" };
         }
 
         // GET: api/Products/5
@@ -44,18 +43,19 @@ namespace EndOfSemester3.Controllers
                 }
                 return Ok(product);
             }
-            //return "value";
         }
 
         // POST: api/Products
         public void Post([FromBody]string value)
         {
-        }
+            string sql = "INSERT INTO Products name = @name, startingPrice = @startingPrice, location = @location, productTypes_id = @productTypes_id;";
+            string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
-        // PUT: api/Products/5
-        /*public void Put(int id, [FromBody]string value)
-        {
-        }*/
+            using (var connection = new SqlConnection(connStr))
+            {
+                connection.Query(sql, new { });
+            }
+        }
 
         // DELETE: api/Products/5
         public void Delete(int id)
@@ -65,7 +65,7 @@ namespace EndOfSemester3.Controllers
 
             using (var connection = new SqlConnection(connStr))
             {
-                connection.BeginTransaction(sql);
+                connection.Query(sql, new { productsID = id });
             }
         }
     }

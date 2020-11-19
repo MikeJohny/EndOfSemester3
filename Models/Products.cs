@@ -15,7 +15,6 @@ namespace EndOfSemester3.Models
 
 		public Products()
 		{
-
 		}
 
 		public Products(int id_, string name_, int startingPrice_, string location_, int productTypes_id_)

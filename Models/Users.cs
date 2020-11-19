@@ -18,6 +18,9 @@ namespace EndOfSemester3.Models
 		public bool isAdmin { get; set; }
 		public string SALT { get; set; }
 
+		public Users()
+        {
+        }
 		public Users(int id_, string username_, string password_, string name_, string email_, string address_, decimal rating_, int numberOfSales_, bool isAdmin_, string SALT_)
 		{
 			this.id = id_;
