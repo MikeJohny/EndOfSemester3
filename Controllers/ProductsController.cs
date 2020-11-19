@@ -45,6 +45,7 @@ namespace EndOfSemester3.Controllers
             }
         }
 
+        // TODO: create object and push to DB 
         // POST: api/Products
         public void Post([FromBody]string value)
         {
