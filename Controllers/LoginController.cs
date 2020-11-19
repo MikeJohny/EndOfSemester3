@@ -10,6 +10,7 @@ namespace EndOfSemester3.Controllers
     public class LoginController : ApiController
     {
         UsersController usersController = new UsersController();
+        EncryptionController encryptionController = new EncryptionController();
         // GET: api/Login
         public IEnumerable<string> Get()
         {
@@ -26,6 +27,10 @@ namespace EndOfSemester3.Controllers
                 if (users.ElementAt(i).username == userName)
                 {
                     password += users.ElementAt(i).SALT;
+                    if (encryptionController.EncryptPassword(password) == users.ElementAt(i).password)
+                    {
+                        isLoggedIn = true;
+                    }
                 }
             }
             return isLoggedIn;
