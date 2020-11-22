@@ -42,6 +42,26 @@ namespace EndOfSemester3.Controllers
             }
         }
 
+        // CREATE: api/Sales (Take a look at this!)
+        public void Create(int users_id, int products_id, bool isBid, string description, int currentPrice )
+        {
+            string sql = "INSERT INTO Users (users_id, products_id, isBid, description, currentPrice)" +
+                " VALUES (@users_id, @products_id, @isBid, @description, @currentPrice)";
+
+            string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+            using (var connection = new SqlConnection(connStr))
+            {
+                var Sales = connection.Query(sql, new
+                {
+                    users_id = users_id,
+                    products_id = products_id,
+                    isBid = isBid,
+                    description = description,
+                    currentPrice = currentPrice,
+                });
+            }
+        }
+
         // POST: api/Sales
         public void Post([FromBody]string value)
         {

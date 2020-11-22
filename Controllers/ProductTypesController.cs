@@ -45,6 +45,22 @@ namespace EndOfSemester3.Controllers
             }
         }
 
+        // CREATE: api/ProductTypes (Take a look at this!)
+        public void Create(string type)
+        {
+            string sql = "INSERT INTO Users (type)" +
+                " VALUES (@type)";
+
+            string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+            using (var connection = new SqlConnection(connStr))
+            {
+                var productTypes = connection.Query(sql, new
+                {
+                    type = type, 
+                });
+            }
+        }
+
         // POST: api/ProductTypes
         public void Post([FromBody]string value)
         {

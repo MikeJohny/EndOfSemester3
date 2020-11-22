@@ -45,9 +45,32 @@ namespace EndOfSemester3.Controllers
             }
         }
 
-        // POST: api/Users
-        public void Post([FromBody]string value)
+        // CREATE: api/Users
+        public void Create(string userName, string password, string name, string email, string address)
         {
+            EncryptionController encryptionController = new EncryptionController();
+            string sql = "INSERT INTO Users (username, password, name, email, address, rating, numberOfSales, isAdmin, SALT)" +
+                " VALUES (@username, @password, @name, @email, @address, @rating, @numberOfSales, @isAdmin, @SALT)";
+
+            string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+            string salt = Guid.NewGuid().ToString("N").Substring(0, 20);
+            string hashedPassword = encryptionController.EncryptPassword(password + salt);
+            using (var connection = new SqlConnection(connStr))
+            {
+                connection.Query(sql, new
+                {
+                    username = userName,
+                    password = hashedPassword,
+                    name = name,
+                    email = email,
+                    address = address,
+                    rating = 0,
+                    numberOfSales = 0,
+                    isAdmin = 0,
+                    SALT = salt
+                });
+
+            }
         }
 
         // DELETE: api/Users/5

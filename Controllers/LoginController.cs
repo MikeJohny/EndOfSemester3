@@ -37,27 +37,7 @@ namespace EndOfSemester3.Controllers
         // Register
         public void Register(string userName, string password, string name, string email, string address)
         {
-            string sql = "INSERT INTO Users (username, password, name, email, address, rating, numberOfSales, isAdmin, SALT)" +
-                " VALUES (@username, @password, @name, @email, @address, @rating, @numberOfSales, @isAdmin, @SALT)";
-
-            string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
-            string salt = Guid.NewGuid().ToString("N").Substring(0, 20);
-            string hashedPassword = encryptionController.EncryptPassword(password + salt);
-            using (var connection = new SqlConnection(connStr))
-            {
-                var product = connection.Query(sql, new {
-                    username = userName, 
-                    password = hashedPassword,
-                    name = name, 
-                    email = email, 
-                    address = address,
-                    rating = 0,
-                    numberOfSales = 0, 
-                    isAdmin = 0,
-                    SALT = salt 
-                });
-                
-            }
+            usersController.Create(userName, password, name, email, address);
         }
 
     }

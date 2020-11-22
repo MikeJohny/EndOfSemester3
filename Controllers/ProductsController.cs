@@ -45,9 +45,26 @@ namespace EndOfSemester3.Controllers
             }
         }
 
-        // TODO: create object and push to DB 
-        // POST: api/Products
-        public void Post([FromBody]string value)
+        // CREATE: api/Products (Take a look at this!)
+        public void Create(string name, int startingPrice, string location, int productTypes_id)
+        {
+            string sql = "INSERT INTO Users (name, startingPrice, location, productTypes_id)" +
+                " VALUES (@name, @startingPrice, @location, @productTypes_id)";
+
+            string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+            using (var connection = new SqlConnection(connStr))
+            {
+                var product = connection.Query(sql, new
+                {
+                    name = name,
+                    startingPrice = startingPrice,
+                    location = location,
+                    productTypes_id = productTypes_id,
+                });
+            }
+        }
+            // POST: api/Products
+            public void Post([FromBody]string value)
         {
             string sql = "INSERT INTO Products name = @name, startingPrice = @startingPrice, location = @location, productTypes_id = @productTypes_id;";
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
