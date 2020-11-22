@@ -43,7 +43,7 @@ namespace EndOfSemester3.Controllers
         }
 
         // CREATE: api/Sales (Take a look at this!)
-        public void Create(int users_id, int products_id, bool isBid, string description, int currentPrice )
+        public void Create(int users_id, int products_id, bool isBid, string description, int currentPrice)
         {
             string sql = "INSERT INTO Users (users_id, products_id, isBid, description, currentPrice)" +
                 " VALUES (@users_id, @products_id, @isBid, @description, @currentPrice)";
