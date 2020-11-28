@@ -35,7 +35,10 @@ namespace EndOfSemester3.Controllers
 
             using (var connection = new SqlConnection(connStr))
             {
-                return connection.QuerySingleOrDefault<Products>(sql, new { productsID = id });
+                return connection.QuerySingleOrDefault<Products>(sql, new 
+                { 
+                    productsID = id
+                });
             }
         }
 
@@ -55,24 +58,13 @@ namespace EndOfSemester3.Controllers
                         name = name,
                         startingPrice = startingPrice,
                         location = location,
-                        productTypes_id = productTypes_id,
+                        productTypes_id = productTypes_id
                     });
                     return product.id;
                 }
                 
             }
             return 0;
-        }
-            // POST: api/Products
-            public void Post([FromBody]string value)
-        {
-            string sql = "INSERT INTO Products name = @name, startingPrice = @startingPrice, location = @location, productTypes_id = @productTypes_id;";
-            string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
-
-            using (var connection = new SqlConnection(connStr))
-            {
-                connection.Query(sql, new { });
-            }
         }
 
         // DELETE: api/Products/5
@@ -83,7 +75,10 @@ namespace EndOfSemester3.Controllers
 
             using (var connection = new SqlConnection(connStr))
             {
-                connection.Query(sql, new { productsID = id });
+                connection.Query(sql, new 
+                { 
+                    productsID = id 
+                });
             }
         }
     }

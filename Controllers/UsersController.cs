@@ -28,20 +28,17 @@ namespace EndOfSemester3.Controllers
         }
 
         // GET: api/Users/5
-        public IHttpActionResult Get(int id)
+        public Users Get(int id)
         {
             string sql = "SELECT * FROM Users WHERE id = @usersID;";
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connStr))
             {
-                var user = connection.QuerySingleOrDefault<Users>(sql, new { usersID = id });
-
-                if (user == null)
-                {
-                    return NotFound();
-                }
-                return Ok(user);
+                return connection.QuerySingleOrDefault<Users>(sql, new 
+                { 
+                    usersID = id 
+                });
             }
         }
 
@@ -151,7 +148,10 @@ namespace EndOfSemester3.Controllers
 
             using (var connection = new SqlConnection(connStr))
             {
-                connection.Query(sql, new { usersID = id });
+                connection.Query(sql, new 
+                { 
+                    usersID = id
+                });
             }
         }
     }

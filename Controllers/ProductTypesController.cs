@@ -28,20 +28,17 @@ namespace EndOfSemester3.Controllers
         }
 
         // GET: api/ProductTypes/5
-        public IHttpActionResult Get(int id)
+        public ProductTypes Get(int id)
         {
             string sql = "SELECT * FROM ProductTypes WHERE id = @productTypesID;";
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connStr))
             {
-                var productType = connection.QuerySingleOrDefault<ProductTypes>(sql, new { productTypesID = id });
-
-                if (productType == null)
-                {
-                    return NotFound();
-                }
-                return Ok(productType);
+                return connection.QuerySingleOrDefault<ProductTypes>(sql, new 
+                { 
+                    productTypesID = id
+                });
             }
         }
 
@@ -65,11 +62,6 @@ namespace EndOfSemester3.Controllers
             return false;
         }
 
-        // POST: api/ProductTypes
-        public void Post([FromBody]string value)
-        {
-        }
-
         // DELETE: api/ProductTypes/5
         public void Delete(int id)
         {
@@ -78,7 +70,10 @@ namespace EndOfSemester3.Controllers
 
             using (var connection = new SqlConnection(connStr))
             {
-                connection.Query(sql, new { productTypesID = id });
+                connection.Query(sql, new 
+                {
+                    productTypesID = id 
+                });
             }
         }
     }
