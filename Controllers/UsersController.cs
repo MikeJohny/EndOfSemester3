@@ -46,35 +46,40 @@ namespace EndOfSemester3.Controllers
         }
 
         // CREATE: api/Users
-        public bool Create(string userName, string password, string name, string email, string address)
+        public int Create(string userName, string password, string name, string email, string address)
         {
             EncryptionController encryptionController = new EncryptionController();
             string sql = "INSERT INTO Users (username, password, name, email, address, rating, numberOfSales, isAdmin, SALT)" +
                 " VALUES (@username, @password, @name, @email, @address, @rating, @numberOfSales, @isAdmin, @SALT)";
             if (findUserByUsername(userName) != null)
             {
-                return false;
+                return 1;//Username taken error code
             }
-            string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
-            string salt = Guid.NewGuid().ToString("N").Substring(0, 20);
-            string hashedPassword = encryptionController.EncryptPassword(password + salt);
-            using (var connection = new SqlConnection(connStr))
+            if ((userName != null && userName != "") && (password != null && password != "") &&
+                (name != null && name != "") && (email != null && email != "") &&
+                (address != null && address != ""))
             {
-                connection.Query(sql, new
+                string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+                string salt = Guid.NewGuid().ToString("N").Substring(0, 20);
+                string hashedPassword = encryptionController.EncryptPassword(password + salt);
+                using (var connection = new SqlConnection(connStr))
                 {
-                    username = userName,
-                    password = hashedPassword,
-                    name = name,
-                    email = email,
-                    address = address,
-                    rating = 0,
-                    numberOfSales = 0,
-                    isAdmin = 0,
-                    SALT = salt
-                });
-
+                    connection.Query(sql, new
+                    {
+                        username = userName,
+                        password = hashedPassword,
+                        name = name,
+                        email = email,
+                        address = address,
+                        rating = 0,
+                        numberOfSales = 0,
+                        isAdmin = 0,
+                        SALT = salt
+                    });
+                }
+                return 0;//No errors found
             }
-            return true;
+            return 2;//User couldn't be created
         }
 
         public Users findUserByUsername(string userName)

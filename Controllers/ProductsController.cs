@@ -28,40 +28,40 @@ namespace EndOfSemester3.Controllers
         }
 
         // GET: api/Products/5
-        public IHttpActionResult Get(int id)
+        public Products Get(int id)
         {
             string sql = "SELECT * FROM Products WHERE id = @productsID;";
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connStr))
             {
-                var product = connection.QuerySingleOrDefault<Products>(sql, new { productsID = id });
-
-                if (product == null)
-                {
-                    return NotFound();
-                }
-                return Ok(product);
+                return connection.QuerySingleOrDefault<Products>(sql, new { productsID = id });
             }
         }
 
-        // CREATE: api/Products (Take a look at this!)
-        public void Create(string name, int startingPrice, string location, int productTypes_id)
+        // CREATE: api/Products
+        public int Create(string name, int startingPrice, string location, int productTypes_id)
         {
-            string sql = "INSERT INTO Users (name, startingPrice, location, productTypes_id)" +
+            string sql = "INSERT INTO Products (name, startingPrice, location, productTypes_id)" +
                 " VALUES (@name, @startingPrice, @location, @productTypes_id)";
-
-            string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
-            using (var connection = new SqlConnection(connStr))
+            if ((name != null && name != "") && (startingPrice != 0) &&
+                (location != null && location != "") && (productTypes_id != 0))
             {
-                var product = connection.Query(sql, new
+                string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+                using (var connection = new SqlConnection(connStr))
                 {
-                    name = name,
-                    startingPrice = startingPrice,
-                    location = location,
-                    productTypes_id = productTypes_id,
-                });
+                    var product = connection.QuerySingleOrDefault<Products>(sql, new
+                    {
+                        name = name,
+                        startingPrice = startingPrice,
+                        location = location,
+                        productTypes_id = productTypes_id,
+                    });
+                    return product.id;
+                }
+                
             }
+            return 0;
         }
             // POST: api/Products
             public void Post([FromBody]string value)

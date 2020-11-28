@@ -45,19 +45,23 @@ namespace EndOfSemester3.Controllers
         // CREATE: api/Sales (Take a look at this!)
         public void Create(int users_id, int products_id, bool isBid, string description, int currentPrice)
         {
+            ProductsController productsController = new ProductsController();
             string sql = "INSERT INTO Users (users_id, products_id, isBid, description, currentPrice)" +
                 " VALUES (@users_id, @products_id, @isBid, @description, @currentPrice)";
-
+            if (description == null || description == "")
+            {
+                description = "No description written.";
+            }
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
             using (var connection = new SqlConnection(connStr))
             {
-                var Sales = connection.Query(sql, new
+                var sales = connection.QuerySingleOrDefault<Sales>(sql, new
                 {
                     users_id = users_id,
                     products_id = products_id,
                     isBid = isBid,
                     description = description,
-                    currentPrice = currentPrice,
+                    currentPrice = productsController.Get(products_id).startingPrice,
                 });
             }
         }

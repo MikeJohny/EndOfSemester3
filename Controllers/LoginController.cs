@@ -35,19 +35,11 @@ namespace EndOfSemester3.Controllers
         }
 
         // Register
-        public bool Register(string userName, string password, string name, string email, string address)
+        public int Register(string userName, string password, string name, string email, string address)
         {
-            //Username taken or not
-            if (usersController.Create(userName, password, name, email, address))
-            {
-                //Open Main page
-                return true;
-            }
-            else
-            {
-                //username taken error
-                return false;
-            }
+            int returnCase = usersController.Create(userName, password, name, email, address);
+            //Checks for the returned error code value(if 0 then no error)
+            return returnCase;
         }
 
     }
