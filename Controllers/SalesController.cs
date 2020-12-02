@@ -89,18 +89,21 @@ namespace EndOfSemester3.Controllers
 
         //Bidding function(updates current price by bid Amount, and also sets user as highest bidder)
         public void Bid(int sales_id, int users_id, int bidValue)
-        {
-            string sql = "UPDATE Sales(currentPrice, highestBidder_id)" +
-                "VALUES(@price, @highestBidder_id)" +
-                "WHERE id ='" + sales_id + "'";
-            string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
-            using (var connection = new SqlConnection(connStr))
+        {//Maybe: failed to place bid return bool
+            if (Get(sales_id).highestBidder_id != users_id)
             {
-                connection.Query(sql, new
+                string sql = "UPDATE Sales(currentPrice, highestBidder_id)" +
+               "VALUES(@price, @highestBidder_id)" +
+               "WHERE id ='" + sales_id + "'";
+                string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+                using (var connection = new SqlConnection(connStr))
                 {
-                    price = (Get(sales_id).currentPrice + bidValue),
-                    highestBidder_id = users_id
-                });
+                    connection.Query(sql, new
+                    {
+                        price = (Get(sales_id).currentPrice + bidValue),
+                        highestBidder_id = users_id
+                    });
+                }
             }
         }
 
