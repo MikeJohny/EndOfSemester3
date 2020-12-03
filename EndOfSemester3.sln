@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndOfSemester3.Tests", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp2", "..\WindowsFormsApp2\WindowsFormsApp2.csproj", "{AB10BFAE-AC98-4F39-8735-FD6CCE1C4376}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient22", "..\..\..\..\Desktop\WebClient22\WebClient22\WebClient22.csproj", "{E0538A52-CA5F-4CC1-9186-CCB5E4916CAF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient22", "..\WebClient22\WebClient22.csproj", "{E0538A52-CA5F-4CC1-9186-CCB5E4916CAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
