@@ -27,17 +27,17 @@ namespace EndOfSemester3.Controllers
             }
         }
 
-        // GET: api/Users/5
-        public Users Get(int id)
+        // GET: api/Users/username
+        public Users Get(string username)
         {
-            string sql = "SELECT * FROM Users WHERE id = @usersID;";
+            string sql = "SELECT * FROM Users WHERE username = @username;";
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connStr))
             {
                 return connection.QuerySingleOrDefault<Users>(sql, new 
                 { 
-                    usersID = id 
+                    username = username 
                 });
             }
         }
@@ -48,7 +48,7 @@ namespace EndOfSemester3.Controllers
             EncryptionController encryptionController = new EncryptionController();
             string sql = "INSERT INTO Users (username, password, name, email, address, rating, numberOfSales, isAdmin, SALT)" +
                 " VALUES (@username, @password, @name, @email, @address, @rating, @numberOfSales, @isAdmin, @SALT)";
-            if (findUserByUsername(userName) != null)
+            if (Get(userName) != null)
             {
                 return 1;//Username taken error code
             }
@@ -79,19 +79,7 @@ namespace EndOfSemester3.Controllers
             return 2;//User couldn't be created
         }
 
-        public Users findUserByUsername(string userName)
-        {
-            var users = Get();
-            Users user = null;
-            for (int i = 0; i < users.Count(); i++)
-            {
-                if (users.ElementAt(i).username == userName)
-                {
-                    user = users.ElementAt(i);
-                }
-            }
-            return user;
-        }
+        
 
         // UPDATE: api/Users
         public void Update(string userName, string password, string name, string email, string address)
@@ -101,7 +89,7 @@ namespace EndOfSemester3.Controllers
                 "VALUES(@username, @password, @name, @email, @address, @rating, @numberOfSales, @isAdmin, @SALT)" +
                 "WHERE username ='" + userName + "'";
             //Current User Data
-            var user = findUserByUsername(userName);
+            var user = Get(userName);
             string salt = user.SALT;
             string hashedPassword = encryptionController.EncryptPassword(password + salt);
             if (password == null || password == "")
@@ -141,16 +129,16 @@ namespace EndOfSemester3.Controllers
         }
 
         // DELETE: api/Users/5
-        public void Delete(int id)
+        public void Delete(string username)
         {
-            string sql = "DELETE * FROM Users WHERE id = @usersID;";
+            string sql = "DELETE * FROM Users WHERE username = @username;";
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connStr))
             {
                 connection.Query(sql, new 
                 { 
-                    usersID = id
+                    username = username
                 });
             }
         }

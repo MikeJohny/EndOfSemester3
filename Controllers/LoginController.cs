@@ -27,6 +27,7 @@ namespace EndOfSemester3.Controllers
                     password += users.ElementAt(i).SALT;
                     if (encryptionController.EncryptPassword(password) == users.ElementAt(i).password)
                     {
+                        Models.IsLoggedIn.getInstance().userName = userName;
                         isLoggedIn = true;
                     }
                 }
@@ -38,7 +39,11 @@ namespace EndOfSemester3.Controllers
         public int Register(string userName, string password, string name, string email, string address)
         {
             int returnCase = usersController.Create(userName, password, name, email, address);
-            //Checks for the returned error code value(if 0 then no error)
+            if (returnCase == 0)
+            {
+                Models.IsLoggedIn.getInstance().userName = userName;
+            }
+            //Returns error code value(if 0 then no error)
             return returnCase;
         }
 

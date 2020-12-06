@@ -45,6 +45,7 @@ namespace EndOfSemester3.Controllers
         // CREATE: api/Products
         public int Create(string name, int startingPrice, string location, int productTypes_id)
         {
+            //Error msg, please bevare (null return at product)
             string sql = "INSERT INTO Products (name, startingPrice, location, productTypes_id)" +
                 " VALUES (@name, @startingPrice, @location, @productTypes_id)";
             if ((name != null && name != "") && (startingPrice != 0) &&

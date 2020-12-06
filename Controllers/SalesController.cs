@@ -58,18 +58,14 @@ namespace EndOfSemester3.Controllers
         }
 
         // CREATE: api/Sales (Take a look at this!)
-        public void Create(int users_id, int products_id, bool isBid, string description, int currentPrice, int bidHours)
+        public void Create(string users_id, int products_id, string description, int currentPrice, int bidHours)
         {
-            TimeSpan timeRemaining = new TimeSpan(0, 0, 0);
-            string sql = "INSERT INTO Sales (users_id, products_id, isBid, description, currentPrice, timeRemaining, isActive)" +
-                " VALUES (@users_id, @products_id, @isBid, @description, @currentPrice, @timeRemaining, @isActive)";
+            TimeSpan timeRemaining = new TimeSpan(bidHours, 0, 0);
+            string sql = "INSERT INTO Sales (users_id, products_id, description, currentPrice, timeRemaining, isActive)" +
+                " VALUES (@users_id, @products_id, @description, @currentPrice, @timeRemaining, @isActive)";
             if (description == null || description == "")
             {
                 description = "No description written.";
-            }
-            if (bidHours != 0)
-            {
-                timeRemaining = new TimeSpan(bidHours, 0, 0);
             }
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
             using (var connection = new SqlConnection(connStr))
@@ -78,7 +74,6 @@ namespace EndOfSemester3.Controllers
                 {
                     users_id = users_id,
                     products_id = products_id,
-                    isBid = isBid,
                     description = description,
                     currentPrice = productsController.Get(products_id).startingPrice,
                     timeRemaining = timeRemaining,
@@ -88,7 +83,7 @@ namespace EndOfSemester3.Controllers
         }
 
         //Bidding function(updates current price by bid Amount, and also sets user as highest bidder)
-        public void Bid(int sales_id, int users_id, int bidValue)
+        public void Bid(int sales_id, string users_id, int bidValue)
         {//Maybe: failed to place bid return bool
             if (Get(sales_id).highestBidder_id != users_id)
             {
