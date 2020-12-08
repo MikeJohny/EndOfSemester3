@@ -7,30 +7,30 @@ namespace EndOfSemester3.Models
 {
 	public class Users
 	{
-		public string username { get; set; }
-		public string password { get; set; }
-		public string name { get; set; }
-		public string email { get; set; }
-		public string address { get; set; }
-		public decimal rating { get; set; }
-		public int numberOfSales { get; set; }
-		public bool isAdmin { get; set; }
-		public string SALT { get; set; }
+		public string Username { get; set; }
+		public string Password { get; set; }
+		public string Name { get; set; }
+		public string Email { get; set; }
+		public string Address { get; set; }
+		public decimal Rating { get; set; }
+		public int NumberOfSales { get; set; }
+		public bool IsAdmin { get; set; }
+		public string Salt { get; set; }
 
 		public Users()
         {
         }
-		public Users(string username_, string password_, string name_, string email_, string address_, decimal rating_, int numberOfSales_, bool isAdmin_, string SALT_)
+		public Users(string username, string password, string name, string email, string address, decimal rating, int numberOfSales, bool isAdmin, string salt)
 		{
-			this.username = username_;
-			this.password = password_;
-			this.name = name_;
-			this.email = email_;
-			this.address = address_;
-			this.rating = rating_;
-			this.numberOfSales = numberOfSales_;
-			this.isAdmin = isAdmin_;
-			this.SALT = SALT_;
+			this.Username = username;
+			this.Password = password;
+			this.Name = name;
+			this.Email = email;
+			this.Address = address;
+			this.Rating = rating;
+			this.NumberOfSales = numberOfSales;
+			this.IsAdmin = isAdmin;
+			this.Salt = salt;
 		}
 	}
 }

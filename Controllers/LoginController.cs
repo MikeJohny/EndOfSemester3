@@ -12,22 +12,22 @@ namespace EndOfSemester3.Controllers
 {
     public class LoginController : ApiController
     {
-        UsersController usersController = new UsersController();
-        EncryptionController encryptionController = new EncryptionController();
+        UsersController _usersController = new UsersController();
+        EncryptionController _encryptionController = new EncryptionController();
 
         // Login
         public bool Login(string userName, string password)
         {
             bool isLoggedIn = false;
-            var users = usersController.Get();
+            var users = _usersController.Get();
             for (int i = 0; i < users.Count(); i++)
             {
-                if (users.ElementAt(i).username == userName)
+                if (users.ElementAt(i).Username == userName)
                 {
-                    password += users.ElementAt(i).SALT;
-                    if (encryptionController.EncryptPassword(password) == users.ElementAt(i).password)
+                    password += users.ElementAt(i).Salt;
+                    if (_encryptionController.EncryptPassword(password) == users.ElementAt(i).Password)
                     {
-                        Models.IsLoggedIn.getInstance().userName = userName;
+                        Models.IsLoggedIn.GetInstance().UserName = userName;
                         isLoggedIn = true;
                     }
                 }
@@ -38,10 +38,10 @@ namespace EndOfSemester3.Controllers
         // Register
         public int Register(string userName, string password, string name, string email, string address)
         {
-            int returnCase = usersController.Create(userName, password, name, email, address);
+            int returnCase = _usersController.Create(userName, password, name, email, address);
             if (returnCase == 0)
             {
-                Models.IsLoggedIn.getInstance().userName = userName;
+                Models.IsLoggedIn.GetInstance().UserName = userName;
             }
             //Returns error code value(if 0 then no error)
             return returnCase;

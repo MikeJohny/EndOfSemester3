@@ -7,16 +7,16 @@ namespace EndOfSemester3.Models
 {
 	public class ProductTypes
 	{
-		public int id { get; set; }
-		public string type { get; set; }
+		public int Id { get; set; }
+		public string Type { get; set; }
 
 		public ProductTypes()
         {
         }
-		public ProductTypes(int id_, string type_)
+		public ProductTypes(int id, string type)
 		{
-			this.id = id_;
-			this.type = type_;
+			this.Id = id;
+			this.Type = type;
 		}
 	}
 }

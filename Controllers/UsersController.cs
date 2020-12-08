@@ -90,23 +90,23 @@ namespace EndOfSemester3.Controllers
                 "WHERE username ='" + userName + "'";
             //Current User Data
             var user = Get(userName);
-            string salt = user.SALT;
+            string salt = user.Salt;
             string hashedPassword = encryptionController.EncryptPassword(password + salt);
             if (password == null || password == "")
             {
-                hashedPassword = user.password;
+                hashedPassword = user.Password;
             }
             if (name == null || name == "")
             {
-                name = user.name;
+                name = user.Name;
             }
             if (email == null || email == "")
             {
-                email = user.email;
+                email = user.Email;
             }
             if (address == null || address == "")
             {
-                address = user.address;
+                address = user.Address;
             }
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
             
@@ -119,9 +119,9 @@ namespace EndOfSemester3.Controllers
                     name = name,
                     email = email,
                     address = address,
-                    rating = user.rating,
-                    numberOfSales = user.numberOfSales,
-                    isAdmin = user.isAdmin,
+                    rating = user.Rating,
+                    numberOfSales = user.NumberOfSales,
+                    isAdmin = user.IsAdmin,
                     SALT = salt
                 });
 

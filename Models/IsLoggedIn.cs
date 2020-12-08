@@ -7,21 +7,21 @@ namespace EndOfSemester3.Models
 {
     public class IsLoggedIn
     {
-        public string userName { get; set; }
-        private static IsLoggedIn instance;
+        public string UserName { get; set; }
+        private static IsLoggedIn _instance;
         //Here we are using a singleton pattern
         private IsLoggedIn()
         {
 
         }
 
-        public static IsLoggedIn getInstance()
+        public static IsLoggedIn GetInstance()
         {
-            if (instance == null)
+            if (_instance == null)
             {
-                instance = new IsLoggedIn();
+                _instance = new IsLoggedIn();
             }
-            return instance;
+            return _instance;
         }
     }
 }

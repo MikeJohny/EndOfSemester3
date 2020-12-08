@@ -43,13 +43,13 @@ namespace EndOfSemester3.Controllers
         }
 
         // CREATE: api/Products
-        public int Create(string name, int startingPrice, string location, int productTypes_id)
+        public int Create(string name, int startingPrice, string location, int productTypesId)
         {
             //Error msg, please bevare (null return at product)
             string sql = "INSERT INTO Products (name, startingPrice, location, productTypes_id)" +
                 " VALUES (@name, @startingPrice, @location, @productTypes_id)";
             if ((name != null && name != "") && (startingPrice != 0) &&
-                (location != null && location != "") && (productTypes_id != 0))
+                (location != null && location != "") && (productTypesId != 0))
             {
                 string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
                 using (var connection = new SqlConnection(connStr))
@@ -59,9 +59,9 @@ namespace EndOfSemester3.Controllers
                         name = name,
                         startingPrice = startingPrice,
                         location = location,
-                        productTypes_id = productTypes_id
+                        productTypes_id = productTypesId
                     });
-                    return product.id;
+                    return product.Id;
                 }
                 
             }
