@@ -13,7 +13,7 @@ namespace AuctionSite
     public class AuctionHub : Hub
     {
         #region Properties
-        static private Timer _timer;
+        static private Timer timer;
         public static bool Initialized = false;
         public static object InitLock = new object(); 
         //AuctionViewModel is used to store and keep track of bid information
@@ -42,7 +42,7 @@ namespace AuctionSite
             // Initialize model
             AuctionViewModel = new AuctionViewModel(0, 10, DateTime.Now.AddSeconds(59), 10);
 
-            _timer = new System.Threading.Timer(TimerExpired, null, Sec, 0);
+            timer = new System.Threading.Timer(TimerExpired, null, Sec, 0);
 
             Initialized = true;
         }
@@ -59,11 +59,11 @@ namespace AuctionSite
             if (AuctionViewModel.TimeRemaining > 0)
             {
                 Clients.All.updateRemainingTime(string.Format("{0:hh\\:mm\\:ss}", AuctionViewModel.GetTimeRemaining()));
-                _timer.Change(Sec, 0);
+                timer.Change(Sec, 0);
             }
             else
             {
-                _timer.Dispose();
+                timer.Dispose();
                 Clients.All.updateRemainingTime("00:00:00");
                 Clients.All.finishBidding();
                 AddMessage("Time Expired");

@@ -14,5 +14,12 @@ namespace EndOfSemester3.Controllers
 
             return View();
         }
+        public ActionResult Auction()
+        {
+            ViewBag.Message = "Welcome to AuctionSite!";
+            return View();
+        }
+
+
     }
 }
