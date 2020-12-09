@@ -7,7 +7,7 @@ using Microsoft.AspNet.SignalR.Hubs;
 using System.Threading;
 using AuctionSite.Models;
 
-namespace AuctionSite
+namespace EndOfSemester3
 {
     [HubName("Auction")]
     public class AuctionHub : Hub

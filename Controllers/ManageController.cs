@@ -3,12 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using EndOfSemester3.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using IdentitySample.Models;
 
-namespace IdentitySample.Controllers
+namespace EndOfSemester3.Controllers
 {
     [Authorize]
     public class ManageController : Controller
