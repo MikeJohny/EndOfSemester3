@@ -7,23 +7,23 @@ namespace EndOfSemester3.Models
 {
 	public class Products
 	{
-		public int id { get; set; }
-		public string name { get; set; }
-		public int startingPrice { get; set; }
-		public string location { get; set; }
-		public int productTypes_id { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public int StartingPrice { get; set; }
+		public string Location { get; set; }
+		public int ProductTypesId { get; set; }
 
 		public Products()
 		{
 		}
 
-		public Products(int id_, string name_, int startingPrice_, string location_, int productTypes_id_)
+		public Products(int id, string name, int startingPrice, string location, int productTypesId)
 		{
-			this.id = id_;
-			this.name = name_;
-			this.startingPrice = startingPrice_;
-			this.location = location_;
-			this.productTypes_id = productTypes_id_;
+			this.Id = id;
+			this.Name = name;
+			this.StartingPrice = startingPrice;
+			this.Location = location;
+			this.ProductTypesId = productTypesId;
 		}
 
 		

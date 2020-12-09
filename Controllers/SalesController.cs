@@ -12,8 +12,8 @@ namespace EndOfSemester3.Controllers
 {
     public class SalesController : ApiController
     {
-        ProductsController productsController = new ProductsController();
-        ProductTypesController productTypesController = new ProductTypesController();
+        ProductsController _productsController = new ProductsController();
+        ProductTypesController _productTypesController = new ProductTypesController();
         // GET: api/Sales
         public IEnumerable<Sales> Get()
         {
@@ -58,7 +58,7 @@ namespace EndOfSemester3.Controllers
         }
 
         // CREATE: api/Sales (Take a look at this!)
-        public void Create(string users_id, int products_id, string description, int currentPrice, int bidHours)
+        public void Create(string usersId, int productsId, string description, int currentPrice, int bidHours)
         {
             TimeSpan timeRemaining = new TimeSpan(bidHours, 0, 0);
             string sql = "INSERT INTO Sales (users_id, products_id, description, currentPrice, timeRemaining, isActive)" +
@@ -72,10 +72,10 @@ namespace EndOfSemester3.Controllers
             {
                 var sales = connection.QuerySingleOrDefault<Sales>(sql, new
                 {
-                    users_id = users_id,
-                    products_id = products_id,
+                    users_id = usersId,
+                    products_id = productsId,
                     description = description,
-                    currentPrice = productsController.Get(products_id).startingPrice,
+                    currentPrice = _productsController.Get(productsId).StartingPrice,
                     timeRemaining = timeRemaining,
                     isActive = true
                 });
@@ -83,20 +83,20 @@ namespace EndOfSemester3.Controllers
         }
 
         //Bidding function(updates current price by bid Amount, and also sets user as highest bidder)
-        public void Bid(int sales_id, string users_id, int bidValue)
+        public void Bid(int salesId, string usersId, int bidValue)
         {//Maybe: failed to place bid return bool
-            if (Get(sales_id).highestBidder_id != users_id)
+            if (Get(salesId).HighestBidderId != usersId)
             {
                 string sql = "UPDATE Sales(currentPrice, highestBidder_id)" +
                "VALUES(@price, @highestBidder_id)" +
-               "WHERE id ='" + sales_id + "'";
+               "WHERE id ='" + salesId + "'";
                 string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
                 using (var connection = new SqlConnection(connStr))
                 {
                     connection.Query(sql, new
                     {
-                        price = (Get(sales_id).currentPrice + bidValue),
-                        highestBidder_id = users_id
+                        price = (Get(salesId).CurrentPrice + bidValue),
+                        highestBidder_id = usersId
                     });
                 }
             }
@@ -110,7 +110,7 @@ namespace EndOfSemester3.Controllers
             var sales = GetActive();
             for (int i = 0; i < sales.Count(); i++)
             {
-                if (!productsController.Get(sales.ElementAt(i).products_id).name.Contains(name))
+                if (!_productsController.Get(sales.ElementAt(i).ProductsId).Name.Contains(name))
                 {//if this search doesnt work properly, then the remove is the problem
                     sales.ToList().RemoveAt(i);
                 }
@@ -124,21 +124,21 @@ namespace EndOfSemester3.Controllers
             var sales = GetActive();
             if (sortBy == "ascending")
             {
-                sales.OrderBy(sale => sale.currentPrice);
+                sales.OrderBy(sale => sale.CurrentPrice);
             }
             else if (sortBy == "descending")
             {
-                sales.OrderByDescending(sale => sale.currentPrice);
+                sales.OrderByDescending(sale => sale.CurrentPrice);
             }   
             else
             {//if this sorting doesnt work properly, then the remove is the problem
-                var productTypes = productTypesController.Get();
+                var productTypes = _productTypesController.Get();
                 for (int i = 0; i < sales.Count(); i++)
                 {
                     for (int j = 0; j < productTypes.Count(); j++)
                     {
-                        if (productTypesController.Get(productsController.Get
-                            (sales.ElementAt(i).products_id).productTypes_id).type != sortBy)
+                        if (_productTypesController.Get(_productsController.Get
+                            (sales.ElementAt(i).ProductsId).ProductTypesId).Type != sortBy)
                         {
                             sales.ToList().RemoveAt(i);
                         }
