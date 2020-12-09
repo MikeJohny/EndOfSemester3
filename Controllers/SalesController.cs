@@ -102,6 +102,8 @@ namespace EndOfSemester3.Controllers
             }
         }
 
+
+
         //Search for Sales that have a specific string snippet in their Product's name
         public IEnumerable<Sales> FindSaleByProductName(string name)
         {
