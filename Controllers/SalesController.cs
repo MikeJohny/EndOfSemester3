@@ -31,7 +31,7 @@ namespace EndOfSemester3.Controllers
         // GET: api/Sales
         public IEnumerable<Sales> GetActive()
         {
-            string sql = "SELECT * FROM Sales WHERE isActive = 1";
+            string sql = "SELECT * FROM Sales WHERE IsActive = 1";
 
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
@@ -45,7 +45,7 @@ namespace EndOfSemester3.Controllers
         // GET: api/Sales/5
         public Sales Get(int id)
         {
-            string sql = "SELECT * FROM Sales WHERE id = @salesID;";
+            string sql = "SELECT * FROM Sales WHERE Id = @salesID;";
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connStr))
@@ -61,7 +61,7 @@ namespace EndOfSemester3.Controllers
         public void Create(string usersId, int productsId, string description, int currentPrice, int bidHours)
         {
             TimeSpan timeRemaining = new TimeSpan(bidHours, 0, 0);
-            string sql = "INSERT INTO Sales (users_id, products_id, description, currentPrice, timeRemaining, isActive)" +
+            string sql = "INSERT INTO Sales (Users_id, Products_id, Description, CurrentPrice, TimeRemaining, IsActive)" +
                 " VALUES (@users_id, @products_id, @description, @currentPrice, @timeRemaining, @isActive)";
             if (description == null || description == "")
             {
@@ -87,7 +87,7 @@ namespace EndOfSemester3.Controllers
         {//Maybe: failed to place bid return bool
             if (Get(salesId).HighestBidderId != usersId)
             {
-                string sql = "UPDATE Sales(currentPrice, highestBidder_id)" +
+                string sql = "UPDATE Sales(CurrentPrice, HighestBidder_id)" +
                "VALUES(@price, @highestBidder_id)" +
                "WHERE id ='" + salesId + "'";
                 string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
@@ -151,7 +151,7 @@ namespace EndOfSemester3.Controllers
         // DELETE: api/Sales/5
         public void Delete(int id)
         {
-            string sql = "DELETE * FROM Sales WHERE id = @salesID;";
+            string sql = "DELETE * FROM Sales WHERE Id = @salesID;";
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connStr))

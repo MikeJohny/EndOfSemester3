@@ -30,7 +30,7 @@ namespace EndOfSemester3.Controllers
         // GET: api/ProductTypes/5
         public ProductTypes Get(int id)
         {
-            string sql = "SELECT * FROM ProductTypes WHERE id = @productTypesID;";
+            string sql = "SELECT * FROM ProductTypes WHERE Id = @productTypesID;";
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connStr))
@@ -45,7 +45,7 @@ namespace EndOfSemester3.Controllers
         // CREATE: api/ProductTypes
         public bool Create(string type)
         {
-            string sql = "INSERT INTO ProductTypes (type)" +
+            string sql = "INSERT INTO ProductTypes (Type)" +
                 " VALUES (@type)";
             if (type != null && type != "")
             {
@@ -65,7 +65,7 @@ namespace EndOfSemester3.Controllers
         // DELETE: api/ProductTypes/5
         public void Delete(int id)
         {
-            string sql = "DELETE * FROM ProductTypes WHERE id = @productTypesID;";
+            string sql = "DELETE * FROM ProductTypes WHERE Id = @productTypesID;";
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connStr))

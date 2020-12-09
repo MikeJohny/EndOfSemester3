@@ -30,7 +30,7 @@ namespace EndOfSemester3.Controllers
         // GET: api/Products/5
         public Products Get(int id)
         {
-            string sql = "SELECT * FROM Products WHERE id = @productsID;";
+            string sql = "SELECT * FROM Products WHERE Id = @productsID;";
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connStr))
@@ -43,23 +43,23 @@ namespace EndOfSemester3.Controllers
         }
 
         // CREATE: api/Products
-        public int Create(string name, int startingPrice, string location, int productTypesId)
+        public int Create(string name, int startingPrice, string location, int productTypes_id)
         {
             //Error msg, please beware (null return at product)
-            string sql = "INSERT INTO Products (name, startingPrice, location, productTypes_id)" +
+            string sql = "INSERT INTO Products (Name, StartingPrice, Location, ProductTypes_id)" +
                 " VALUES (@name, @startingPrice, @location, @productTypes_id)";
-            if ((name != null && name != "") && (startingPrice != 0) &&
-                (location != null && location != "") && (productTypesId != 0))
+            if ((name != null && name != "") && (startingPrice >= 0) &&
+                (location != null && location != "") && (productTypes_id != 0))
             {
                 string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
                 using (var connection = new SqlConnection(connStr))
                 {
                     var product = connection.QuerySingleOrDefault<Products>(sql, new
                     {
-                        name = name,
-                        startingPrice = startingPrice,
-                        location = location,
-                        productTypes_id = productTypesId
+                        name,
+                        startingPrice,
+                        location,
+                        productTypes_id
                     });
                     return product.Id;
                 }
@@ -71,7 +71,7 @@ namespace EndOfSemester3.Controllers
         // DELETE: api/Products/5
         public void Delete(int id)
         {
-            string sql = "DELETE FROM Products WHERE id = @productsID;";
+            string sql = "DELETE FROM Products WHERE Id = @productsID;";
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connStr))

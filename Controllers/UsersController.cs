@@ -30,7 +30,7 @@ namespace EndOfSemester3.Controllers
         // GET: api/Users/username
         public Users Get(string username)
         {
-            string sql = "SELECT * FROM Users WHERE username = @username;";
+            string sql = "SELECT * FROM Users WHERE Username = @username;";
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connStr))
@@ -46,7 +46,7 @@ namespace EndOfSemester3.Controllers
         public int Create(string userName, string password, string name, string email, string address)
         {
             EncryptionController encryptionController = new EncryptionController();
-            string sql = "INSERT INTO Users (username, password, name, email, address, rating, numberOfSales, isAdmin, SALT)" +
+            string sql = "INSERT INTO Users (Username, Password, Name, Email, Address, Rating, NumberOfSales, IsAdmin, SALT)" +
                 " VALUES (@username, @password, @name, @email, @address, @rating, @numberOfSales, @isAdmin, @SALT)";
             if (Get(userName) != null)
             {
@@ -85,9 +85,9 @@ namespace EndOfSemester3.Controllers
         public void Update(string userName, string password, string name, string email, string address)
         {
             EncryptionController encryptionController = new EncryptionController();
-            string sql = "UPDATE Users(username, password, name, email, address, rating, numberOfSales, isAdmin, SALT)" +
+            string sql = "UPDATE Users(Password, Name, Email, Address, Rating, NumberOfSales, IsAdmin, SALT)" +
                 "VALUES(@username, @password, @name, @email, @address, @rating, @numberOfSales, @isAdmin, @SALT)" +
-                "WHERE username ='" + userName + "'";
+                "WHERE Username ='" + userName + "'";
             //Current User Data
             var user = Get(userName);
             string salt = user.Salt;
@@ -114,7 +114,6 @@ namespace EndOfSemester3.Controllers
             {
                 connection.Query(sql, new
                 {
-                    username = userName,
                     password = hashedPassword,
                     name = name,
                     email = email,
@@ -131,7 +130,7 @@ namespace EndOfSemester3.Controllers
         // DELETE: api/Users/5
         public void Delete(string username)
         {
-            string sql = "DELETE * FROM Users WHERE username = @username;";
+            string sql = "DELETE * FROM Users WHERE Username = @username;";
             string connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
             using (var connection = new SqlConnection(connStr))
