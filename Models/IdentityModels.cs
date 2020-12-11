@@ -21,7 +21,7 @@ namespace EndOfSemester3.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("ConnStr", throwIfV1Schema: false)
         {
         }
 
