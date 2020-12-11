@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace EndOfSemester3.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -17,6 +18,11 @@ namespace EndOfSemester3.Controllers
         public ActionResult Auction()
         {
             ViewBag.Message = "Welcome to AuctionSite!";
+            return View();
+        }
+
+        public ActionResult Chat()
+        {
             return View();
         }
 
