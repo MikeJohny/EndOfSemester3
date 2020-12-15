@@ -33,8 +33,8 @@ namespace EndOfSemester3
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/twilio-chat.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/twilio-chat.css"));
         }
     }
 }
