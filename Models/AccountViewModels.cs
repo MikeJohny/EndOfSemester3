@@ -49,9 +49,9 @@ namespace EndOfSemester3.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Username")]
-        
-        public string UserName { get; set; }
+        [Display(Name = "Email")]
+        [EmailAddress]
+        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -64,9 +64,6 @@ namespace EndOfSemester3.Models
 
     public class RegisterViewModel
     {
-        [Required]
-        [Display(Name = "Username")]
-        public string UserName { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

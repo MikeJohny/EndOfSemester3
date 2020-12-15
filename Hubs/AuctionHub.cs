@@ -40,7 +40,7 @@ namespace EndOfSemester3
         private void InitializeAuction()
         {            
             // Initialize model
-            AuctionViewModel = new AuctionViewModel(0, 10, DateTime.Now.AddDays(1), 10);
+            AuctionViewModel = new AuctionViewModel(0, 10, DateTime.Now.AddSeconds(59), 10);
 
             timer = new System.Threading.Timer(TimerExpired, null, Sec, 0);
 

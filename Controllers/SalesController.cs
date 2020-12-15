@@ -60,8 +60,7 @@ namespace EndOfSemester3.Controllers
         // CREATE: api/Sales (Take a look at this!)
         public void Create(string usersId, int productsId, string description, int currentPrice, int bidHours)
         {
-            //TimeSpan timeRemaining = new TimeSpan(bidHours, 0, 0);
-            DateTime endTime = new DateTime(bidHours,DateTime.Now.AddMinutes(0),DateTime.Now.AddSeconds(0));
+            TimeSpan timeRemaining = new TimeSpan(bidHours, 0, 0);
             string sql = "INSERT INTO Sales (Users_id, Products_id, Description, CurrentPrice, TimeRemaining, IsActive)" +
                 " VALUES (@users_id, @products_id, @description, @currentPrice, @timeRemaining, @isActive)";
             if (description == null || description == "")
@@ -77,7 +76,7 @@ namespace EndOfSemester3.Controllers
                     products_id = productsId,
                     description = description,
                     currentPrice = _productsController.Get(productsId).StartingPrice,
-                    timeRemaining = endTime,
+                    timeRemaining = timeRemaining,
                     isActive = true
                 });
             }
