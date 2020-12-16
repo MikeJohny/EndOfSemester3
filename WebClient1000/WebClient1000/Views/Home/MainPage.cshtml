@@ -1,0 +1,65 @@
+﻿@model IEnumerable<WebClient1000.Models.Sales>
+
+@{
+    ViewBag.Title = "MainPage";
+}
+
+<h2>MainPage</h2>
+
+<form action="CreateSaleButton" class="box" method="post">
+    <input type="submit" id="btn" value="Create new Sale" formaction="CreateSale" name="submitButtonP">
+</form>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UsersId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductsId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HighestBidderId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeRemaining)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UsersId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductsId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HighestBidderId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeRemaining)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        
+    </tr>
+}
+
+</table>
